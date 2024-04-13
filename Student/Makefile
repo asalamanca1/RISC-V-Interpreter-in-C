@@ -5,20 +5,19 @@ CFLAGS = -O3 -g3 -Wall -Wextra -Werror=format-security -Werror=implicit-function
          -Wshadow -Wpointer-arith -Wcast-align -Wstrict-prototypes -Wwrite-strings -Wconversion
 
 # This files are dummy files to test the basics of the interpreter
-INSTRUCTIONS := LI_SP_ADD MV_X0 NEG_NOT J_JR
+SIMPLE_INSTRUCTIONS := J_JR LI_SP_ADD MV_X0 NEG_NOT
+INSTRUCTIONS := Arith Bitwise Load Store Pseudo Jump
 
 B_SUF = _BUFFER.txt
 A_SUF = _ASSEMBLY.txt
 
-all: riscv get_assembly_files $(foreach instr,$(INSTRUCTIONS),$(instr))
-
-get_assembly_files:
-	cp assembly_files/* .
+all: riscv $(foreach instr,$(INSTRUCTIONS),$(instr))
 
 riscv: $(OBJS) riscv.o
 	$(CC) -o $@ $^
 
 $(INSTRUCTIONS):
+	cp ../assembly_files/$@$(A_SUF) .
 	touch $@$(B_SUF)  # Create buffer file
 	# Interpret $@$(A_SUF) using ./riscv and populate $@$(B_SUF) with final registers status
 	./riscv $@$(A_SUF) $@$(B_SUF)
