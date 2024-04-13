@@ -20,7 +20,7 @@ $(INSTRUCTIONS):
 	cp ../assembly_files/$@$(A_SUF) .
 	touch $@$(B_SUF)  # Create buffer file
 	# Interpret $@$(A_SUF) using ./riscv and populate $@$(B_SUF) with final registers status
-	./riscv $@$(A_SUF) $@$(B_SUF)
+	-./riscv $@$(A_SUF) $@$(B_SUF)
 
 clean:
 	rm -f *.o riscv $(addsuffix $(A_SUF),$(INSTRUCTIONS)) $(addsuffix $(B_SUF),$(INSTRUCTIONS)) seekable_file.txt
