@@ -28,5 +28,5 @@ clean:
 my_string.o: my_string.c my_string.h
 tokenizer.o: tokenizer.c tokenizer.h my_string.h
 process_file.o: process_file.c process_file.h
-riscv.o: riscv.c my_string.h tokenizer.h process_file.h
+riscv.o: riscv.c riscv.h my_string.h tokenizer.h process_file.h
 

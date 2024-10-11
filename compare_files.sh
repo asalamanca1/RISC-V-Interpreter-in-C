@@ -11,6 +11,7 @@ if [ ! -d "$instructor_dir" ] || [ ! -d "$student_dir" ]; then
 fi
 
 # Generate files in student_dir
+
 $(cd "$student_dir" && make clean all)
 
 # Get the list of filenames in each directory

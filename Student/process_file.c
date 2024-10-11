@@ -19,7 +19,7 @@ size_t n_lines;
 entry_t *file_lines;
 int fd;
 
-static void __close_file(const int __fd) {
+static void __close_file(int __fd) {
   if (close(__fd) < 0)
     fprintf(stderr, "Error closing file \"%s\": %s\n", SEEK_FILE_NAME,
             strerror(errno));
@@ -29,8 +29,6 @@ int open_file(void) {
   size_t filesize;
   off_t lseek_res;
   void *ptr;
-
-  n_lines = ((size_t)0);
 
   fd = open(SEEK_FILE_NAME, O_RDONLY);
 
@@ -85,7 +83,7 @@ int close_file(void) {
   return 0;
 }
 
-void get_line(char *buffer, const size_t k) {
+void get_line(char *buffer, size_t k) {
   // Copy line from file into buffer
   memcpy(buffer, file_lines[k].line, LINE_SIZE);
 
@@ -105,6 +103,7 @@ int process_file(const char *file) {
   // Files
   FILE *read_f;
   FILE *write_f;
+  size_t n_lines;
 
   // Buffer variables
   char *buffer;
@@ -167,6 +166,7 @@ int process_file(const char *file) {
   }
 
   // Write a line at the end of file that overwrite PC to -1
+  n_lines++;
   n_chars = fprintf(write_f, "J -%zu", 1 + n_lines * 4);
   fprintf(write_f, "%*s\n", (int)(LINE_SIZE - (size_t)n_chars), "");
 
